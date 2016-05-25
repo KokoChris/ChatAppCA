@@ -2,12 +2,13 @@ var express = require('express');
 var app = express();
 var chatApp = require('./app');
 
+
 app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'))
 
 app.set('view engine', 'ejs');
 
-
+app.use('/',chatApp.session)
 
 app.use('/', chatApp.router);
 

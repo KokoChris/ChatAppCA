@@ -1,4 +1,5 @@
-var router = require('express').Router();
+
+var h = require('../helpers');
 
 module.exports = function() {
     var routes = {
@@ -11,29 +12,20 @@ module.exports = function() {
             },
             '/chat': function(req, res, next) {
                 res.render('chatroom');
+            },
+            '/getSession': function(req,res,next){
+            	res.send('My favourite color' + req.session.favColor)
             }
         },
         'post': {
 
+        },
+        'NA': function (req,res,next){
+        	res.status(404).sendFile(process.cwd() + '/views/404.htm')
         }
     }
 
 
 
-    var registerRoutes = function(routes, method) {
-        for (var key in routes) {
-            if (typeof routes[key] === 'object' && routes[key] !== null && !(routes[key] instanceof Array)) {
-                registerRoutes(routes[key], key);
-            } else {
-                if (method === 'get') {
-                    router.get(key, routes[key]);
-                } else if (method === 'post') {
-                    router.post(key, routes[key]);
-                }
-            }
-        }
-    }
-
-    registerRoutes(routes);
-    return router;
+return h.route(routes);
 }

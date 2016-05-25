@@ -1,0 +1,6 @@
+{
+  "host":"http://localhost:3000:",
+  "dbURI":"mongodb://user:user123@ds011432.mlab.com:11432/chattydb",
+  "sessionSecret": "catscanfly"
+}
+
