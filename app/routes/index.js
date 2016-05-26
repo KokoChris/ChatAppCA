@@ -13,9 +13,7 @@ module.exports = function() {
             '/chat': function(req, res, next) {
                 res.render('chatroom');
             },
-            '/getSession': function(req,res,next){
-            	res.send('My favourite color' + req.session.favColor)
-            }
+            
         },
         'post': {
 
