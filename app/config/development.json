@@ -1,6 +1,13 @@
 {
-  "host":"http://localhost:3000:",
+  "host":"http://localhost:3000",
   "dbURI":"mongodb://user:user123@ds011432.mlab.com:11432/chattydb",
-  "sessionSecret": "catscanfly"
+  "sessionSecret": "catscanfly",
+  "fb":{
+  	"clientID":"184439671953581",
+  	"clientSecret":"da65bdc0c07f57680ff220ca3a59451f",
+  	"callbackURL": "http://localhost:3000/auth/facebook/callback",
+  	"profileFields": ["id","displayName","photos"]
+  }
+  
 }
 

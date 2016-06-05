@@ -1,5 +1,6 @@
 
-var h = require('../helpers');
+const h = require('../helpers');
+const passport = require('passport');
 
 module.exports = function() {
     var routes = {
@@ -7,12 +8,21 @@ module.exports = function() {
             '/': function(req, res, next) {
                 res.render('login');
             },
-            '/rooms': function(req, res, next) {
-                res.render('rooms');
-            },
-            '/chat': function(req, res, next) {
-                res.render('chatroom');
-            },
+            '/rooms':[h.isAuthenticated, function(req, res, next) {
+                res.render('rooms',{ user:req.user});
+            }],
+            '/chat': [h.isAuthenticated ,function(req, res, next) {
+                res.render('chatroom', { user:req.user});
+            }],
+            '/auth/facebook':passport.authenticate('facebook'),
+            '/auth/facebook/callback':passport.authenticate('facebook', {
+                successRedirect: '/rooms',
+                failureRedirect: '/login'
+            }),
+            '/logout':  (req,res,next) => {
+                req.logout();
+                res.redirect('/');
+            }
             
         },
         'post': {
