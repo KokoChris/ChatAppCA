@@ -11,7 +11,7 @@ module.exports = function() {
             '/rooms':[h.isAuthenticated, function(req, res, next) {
                 res.render('rooms',{ user:req.user});
             }],
-            '/chat': [h.isAuthenticated ,function(req, res, next) {
+            '/chat/:id': [h.isAuthenticated ,function(req, res, next) {
                 res.render('chatroom', { user:req.user});
             }],
             '/auth/facebook':passport.authenticate('facebook'),

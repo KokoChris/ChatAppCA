@@ -1,6 +1,7 @@
 'use strict';
 const router = require('express').Router();
 const db = require('../db');
+const crypto = require('crypto');
 
 
 
@@ -52,31 +53,50 @@ let createNewUser = profile => {
 }
 
 let findById = id => {
-    return new Promise ((resolve,reject) => {
-        db.userModel.findById(id, (error,user) => {
+    return new Promise((resolve, reject) => {
+        db.userModel.findById(id, (error, user) => {
             if (error) {
                 reject(error);
             } else {
-                resolve (user);
+                resolve(user);
             }
         });
     });
 }
 
-let isAuthenticated = (req,res,next) => {
-    if(req.isAuthenticated()) {
+let isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
         next();
     } else {
         res.redirect('/')
     }
 }
 
+let findRoomByName = ((allrooms, room) => {
+    let findRoom = allrooms.findIndex((element, index, array) => {
+            if (element.room === room) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    return findRoom > -1 ? true : false;
+});
+
+
+//Generate a unique ID
+
+let randomHex = () => {
+    return crypto.randomBytes(24).toString('hex');
+}
 
 module.exports = {
     route,
     findOne,
     createNewUser,
     findById,
-    isAuthenticated
+    isAuthenticated,
+    findRoomByName,
+    randomHex
 
 }
