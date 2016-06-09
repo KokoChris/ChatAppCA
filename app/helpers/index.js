@@ -90,6 +90,17 @@ let randomHex = () => {
     return crypto.randomBytes(24).toString('hex');
 }
 
+let findRoomById = (allrooms, roomID) => {
+    return allrooms.find((element, index , array) => {
+        if (element.roomID === roomID) {
+            console.log('yolo')
+            return true;
+        } else {
+            console.log('unyolo')
+            return false;
+        }
+    });
+}
 module.exports = {
     route,
     findOne,
@@ -97,6 +108,7 @@ module.exports = {
     findById,
     isAuthenticated,
     findRoomByName,
-    randomHex
+    randomHex,
+    findRoomById
 
 }
