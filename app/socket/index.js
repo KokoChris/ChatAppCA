@@ -13,17 +13,32 @@ module.exports = (io, app) => {
         });
 
         socket.on('createNew', newRoomInput => {
+
         	if(!h.findRoomByName(allrooms,newRoomInput)) {
-        		allrooms.push({
+        		
+
+                allrooms.push({
         			room: newRoomInput,
         			roomID: h.randomHex(),
         			users:[]
         		});
+
         		socket.emit('chatRoomsList' , JSON.stringify(allrooms));
-        		// Emit an updated list to everyone to the rooms page
+        		
         		socket.broadcast.emit('chatRoomsList', JSON.stringify(allrooms));
         	}
         });
     });
 
+
+    io.of('/chatter').on('connection',socket => {
+
+        socket.on('join', data => {
+
+             let usersList  = h.addUserToRoom(allrooms, data , socket);
+             console.log("userlist: " , usersList );
+
+        });
+
+    });
 }
