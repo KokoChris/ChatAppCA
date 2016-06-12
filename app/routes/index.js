@@ -14,14 +14,14 @@ module.exports = function() {
                 let getRoom = h.findRoomById(req.app.locals.chatrooms, req.params.id);
                 console.log(getRoom)
                 if (getRoom === undefined) {
-                    console.log('yolo1')
+                 
                     return next();
                 } else {
-                    console.log('yolo2')
+                    
                     res.render('chatroom', {
                         user: req.user,
                         room: getRoom.room,
-                        roomID: getRoom.ID
+                        roomID: getRoom.roomID
                     });
 
                 }

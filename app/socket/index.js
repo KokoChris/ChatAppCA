@@ -34,11 +34,23 @@ module.exports = (io, app) => {
     io.of('/chatter').on('connection',socket => {
 
         socket.on('join', data => {
+       
 
-             let usersList  = h.addUserToRoom(allrooms, data , socket);
-             console.log("userlist: " , usersList );
+            let usersList  = h.addUserToRoom(allrooms, data , socket);
+             console.log(usersList);
+             socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
+             socket.emit('updateUsersList', JSON.stringify(usersList.users));
 
         });
+
+        socket.on('disconnect', () => {
+        	let room = h.removeUserFromRoom(allrooms , socket);
+        	socket.broadcast.to(room.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
+
+        });
+        socket.on('newMessage', data => {
+        	socket.to(data.roomID).emit('inMessage', JSON.stringify(data));
+        })
 
     });
 }
